@@ -9,19 +9,26 @@ Requires PHP 7.0 or higher.
 Installation
 =============
 
-The best way to install IonescuAlex/google-distance-matrix is using  [Composer](http://getcomposer.org/):
+The best way to install ialex97/google-distance-matrix is using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require IonescuAlex/google-distance-matrix
+$ composer require ialex97/google-distance-matrix
 ```
 
 Getting Started
 ===============
 
+First of all autoload and then include its namespace:
+
+```php
+require __DIR__ . '/vendor/autoload.php';
+use IonescuAlex\GoogleDistanceMatrix\GoogleDistanceMatrix;
+```
+
 ```php
 
 $distanceMatrix = new GoogleDistanceMatrix('YOUR API KEY');
-$distance = $distanceMatrix->setLanguage('cs')
+$distance = $distanceMatrix->setLanguage('en-US')
     ->addOrigin('49.950096, 14.668544')
     ->addOrigin('49.950096, 15.668544')
     ->addDestination('50.031817, 14.490880')
