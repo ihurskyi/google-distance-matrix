@@ -1,5 +1,5 @@
 {
-	"name": "cirovargas/google-distance-matrix",
+	"name": "IonescuAlex/google-distance-matrix",
 	"type": "library",
 	"description": "Google distance matrix API - Estimate travel time and distance for multiple origins and destinations.",
 	"keywords": ["google distance matrix", "distance matrix", "google api", "google maps"],
@@ -7,13 +7,13 @@
 	"authors": [
 		{
 			"name": "Ciro Vargas de Souza Marques",
-			"homepage": "https://www.linkedin.com/in/cirovargas/",
+			"homepage": "https://www.linkedin.com/in/IonescuAlex/",
 			"email": "cirobsb_br@yahoo.com.br"
 		}
 	],
 	"support": {
 		"email": "cirobsb_br@yahoo.com.br",
-		"issues": "https://github.com/cirovargas/google-distance-matrix/issues"
+		"issues": "https://github.com/IonescuAlex/google-distance-matrix/issues"
 	},
 	"version": "v0.0.8",
 	"require": {
@@ -22,7 +22,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"CiroVargas\\GoogleDistanceMatrix\\": "src/"
+			"IonescuAlex\\GoogleDistanceMatrix\\": "src/"
 		}
 	}
 }

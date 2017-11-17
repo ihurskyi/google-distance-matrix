@@ -1,6 +1,6 @@
 <?php
 
-namespace CiroVargas\GoogleDistanceMatrix\Exception;
+namespace IonescuAlex\GoogleDistanceMatrix\Exception;
 
 class DestinationException extends Exception
 {
