@@ -14,7 +14,7 @@ class Distance
      * @param $text
      * @param $value
      */
-    public function __construct(string $text, int $value)
+    public function __construct(string $text = '', int $value = -1)
     {
         $this->text = $text;
         $this->value = $value;

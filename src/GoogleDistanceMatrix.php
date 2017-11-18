@@ -44,6 +44,31 @@ class GoogleDistanceMatrix
     private $avoid;
 
     /**
+    * @var int
+    */
+    private $arrival_time;
+
+    /**
+     * @var int
+     */
+    private $departure_time;
+
+    /**
+     * @var string
+     */
+    private $traffic_model;
+
+    /**
+     * @var array
+     */
+    private $transit_modes;
+
+    /**
+     * @var string
+     */
+    private $transit_routing_preference;
+
+    /**
      * URL for API
      */
     const URL = 'https://maps.googleapis.com/maps/api/distancematrix/json';
@@ -56,10 +81,23 @@ class GoogleDistanceMatrix
     const UNITS_METRIC = 'metric';
     const UNITS_IMPERIAL = 'imperial';
 
-    const AVOID_TOOLS = 'tolls';
+    const AVOID_TOLLS = 'tolls';
     const AVOID_HIGHWAYS = 'highways';
     const AVOID_FERRIES = 'ferries';
     const AVOID_INDOOR = 'indoor';
+
+    const TRAFFIC_MODE_BEST_GUESS = 'best_guess';
+    const TRAFFIC_MODE_PESSIMISTIC = 'pessimistic';
+    const TRAFFIC_MODE_OPTIMISTIC = 'optimistic';
+
+    const TRANSIT_MODE_BUS = 'bus';
+    const TRANSIT_MODE_SUBWAY = 'subway';
+    const TRANSIT_MODE_TRAIN = 'train';
+    const TRANSIT_MODE_TRAM = 'tram';
+    const TRANSIT_MODE_RAIL = 'rail';
+
+    const ROUTING_LESS_WALKING = 'less_walking';
+    const ROUTING_FEWER_TRANSFERS = 'fewer_transfers';
 
     /**
      * GoogleDistanceMatrix constructor.
@@ -77,6 +115,106 @@ class GoogleDistanceMatrix
     public function getApiKey() : string
     {
         return $this->apiKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransitRoutingPreference(): string
+    {
+        return $this->transit_routing_preference;
+    }
+
+    /**
+     * @param string $transit_routing_preference
+     * @return GoogleDistanceMatrix
+     */
+    public function setTransitRoutingPreference(string $transit_routing_preference) : GoogleDistanceMatrix
+    {
+        $this->transit_routing_preference = $transit_routing_preference;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTransitModes() : array
+    {
+        return $this->transit_modes;
+    }
+
+    /**
+     * @param array $transit_modes
+     * @return GoogleDistanceMatrix
+     */
+    public function setTransitModes($transit_modes) : GoogleDistanceMatrix
+    {
+        $this->transit_modes = array($transit_modes);
+        return $this;
+    }
+
+    /**
+     * @param $transit_mode
+     * @return GoogleDistanceMatrix
+     */
+    public function addTransitMode($transit_mode) : GoogleDistanceMatrix
+    {
+        $this->transit_modes[] = $transit_mode;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTrafficModel() : string
+    {
+        return $this->traffic_model;
+    }
+
+    /**
+     * @param string $traffic_model
+     * @return GoogleDistanceMatrix
+     */
+    public function setTrafficModel(string $traffic_model = self::TRAFFIC_MODE_BEST_GUESS) : GoogleDistanceMatrix
+    {
+        $this->traffic_model = $traffic_model;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDepartureTime() : int
+    {
+        return $this->departure_time;
+    }
+
+    /**
+     * @param int $departure_time
+     * @return GoogleDistanceMatrix
+     */
+    public function setDepartureTime(int $departure_time) : GoogleDistanceMatrix
+    {
+        $this->departure_time = $departure_time;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getArrivalTime() : int
+    {
+        return $this->arrival_time;
+    }
+
+    /**
+     * @param int $arrival_time
+     * @return GoogleDistanceMatrix
+     */
+    public function setArrivalTime(int $arrival_time) : GoogleDistanceMatrix
+    {
+        $this->arrival_time = $arrival_time;
+        return $this;
     }
 
     /**
@@ -175,7 +313,7 @@ class GoogleDistanceMatrix
      * @param string $mode
      * @return $this
      */
-    public function setMode($mode = 'driving') : GoogleDistanceMatrix
+    public function setMode($mode = self::MODE_DRIVING) : GoogleDistanceMatrix
     {
         $this->mode = $mode;
         return $this;
@@ -221,18 +359,24 @@ class GoogleDistanceMatrix
             'destinations' => count($this->destinations) > 1 ? implode('|', $this->destinations) : $this->destinations[0],
             'mode' => $this->mode,
             'avoid' => $this->avoid,
-            'units' => $this->units
+            'units' => $this->units,
+            'arrival_time' => $this->arrival_time,
+            'departure_time' => $this->departure_time,
+            'traffic_model' => $this->traffic_model,
+            'transit_mode' => count($this->transit_modes) > 1 ? implode('|', $this->transit_modes) : $this->transit_modes[0],
+            'transit_routing_preference' => $this->transit_routing_preference
         ];
         $parameters = http_build_query($data);
         $url = self::URL.'?'.$parameters;
         
         return $this->request('GET', $url);
     }
-    
+
     /**
      * @param string $type
      * @param string $url
      * @return GoogleDistanceMatrixResponse
+     * @throws \Exception
      */
     private function request($type = 'GET', $url) : GoogleDistanceMatrixResponse
     {
@@ -284,6 +428,15 @@ class GoogleDistanceMatrix
         }
         if (empty($this->getDestinations())) {
             throw new Exception\DestinationException('Destination must be set.');
+        }
+        if (isset($this->departure_time) && isset($this->arrival_time)) {
+            throw new Exception\Exception('departure_time and arrival_time cannot be both specified at the same time.');
+        }
+        if(isset($this->transit_modes) && strcmp($this->mode, self::MODE_TRANSIT) != 0) {
+            throw new Exception\Exception('You cannot specify a transit_mode without the current mode ' . $this->mode);
+        }
+        if (isset($this->transit_routing_preference) && strcmp($this->mode, self::MODE_TRANSIT) != 0) {
+            throw new Exception\Exception('This parameter may only be specified for requests where the mode is transit');
         }
     }
 }

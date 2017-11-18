@@ -122,8 +122,14 @@ class GoogleDistanceMatrixResponse
         }
 
         foreach ($this->responseObject->rows as $row) {
-            $elements = array();
+            $elements = [];
             foreach ($row->elements as $element) {
+                if (strcmp($element->status, Element::STATUS_ZERO_RESULTS) == 0) { //avoid a crash when no route was found
+                    //todo here happens something strange
+                    $elements[] = new Element($element->status, new Duration(), new Distance());
+                    continue;
+                }
+
                 $duration = new Duration($element->duration->text, $element->duration->value);
                 $distance = new Distance($element->distance->text, $element->distance->value);
                 $elements[] = new Element($element->status, $duration, $distance);
