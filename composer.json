@@ -15,7 +15,7 @@
 		"email": "alx.ionescu97@gmail.com",
 		"issues": "https://github.com/iAlex97/google-distance-matrix/issues"
 	},
-	"version": "v0.0.9",
+	"version": "v0.0.10",
 	"require": {
 		"php": ">=7.0",
 		"guzzlehttp/guzzle": "^6.2"
