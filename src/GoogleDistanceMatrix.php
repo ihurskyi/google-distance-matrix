@@ -1,9 +1,9 @@
 <?php
 
-namespace IonescuAlex\GoogleDistanceMatrix;
+namespace IHurskyi\GoogleDistanceMatrix;
 
 use GuzzleHttp\Client;
-use IonescuAlex\GoogleDistanceMatrix\Response\GoogleDistanceMatrixResponse;
+use IHurskyi\GoogleDistanceMatrix\Response\GoogleDistanceMatrixResponse;
 
 class GoogleDistanceMatrix
 {

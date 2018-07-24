@@ -3,16 +3,16 @@ Estimate travel time and distance for multiple destinations.
 
 Requirements
 ============
-Requires PHP 7.0 or higher.
+Requires PHP 7.1 or higher.
 
 
 Installation
 =============
 
-The best way to install ialex97/google-distance-matrix is using  [Composer](http://getcomposer.org/):
+The best way to install ihurskyi/google-distance-matrix is using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require ialex97/google-distance-matrix
+$ composer require ihurskyi/google-distance-matrix
 ```
 
 Getting Started
@@ -22,7 +22,7 @@ First of all autoload and then include its namespace:
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
-use IonescuAlex\GoogleDistanceMatrix\GoogleDistanceMatrix;
+use IHurskyi\GoogleDistanceMatrix\GoogleDistanceMatrix;
 ```
 
 ```php

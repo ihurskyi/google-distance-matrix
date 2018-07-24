@@ -1,8 +1,8 @@
 <?php
 
-namespace IonescuAlex\GoogleDistanceMatrix\Response;
+namespace IHurskyi\GoogleDistanceMatrix\Response;
 
-use IonescuAlex\GoogleDistanceMatrix\Exception\Exception;
+use IHurskyi\GoogleDistanceMatrix\Exception\Exception;
 
 class Element
 {
