@@ -15,7 +15,7 @@
 		"email": "ihurkyi@corevalue.net",
 		"issues": "https://github.com/ihurskyi/google-distance-matrix/issues"
 	},
-	"version": "v0.0.10",
+	"version": "v0.0.11",
 	"require": {
 		"php": ">=7.1",
 		"guzzlehttp/guzzle": "^6.2"
